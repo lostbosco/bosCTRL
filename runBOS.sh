@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Navigate to the directory where your app is stored
-cd /home/deck/BOSctrl/base/BOSmain.py
+cd /home/deck/BOSctrl/base
 
 # Activate the virtual environment
 source /home/deck/BOSctrl/bin/activate
