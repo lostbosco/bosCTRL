@@ -1,7 +1,5 @@
 #!/bin/bash
 
-
-
 # Function to print a border (empty line)
 print_border() {
     printf '%78s\n' ""  # Print an empty border line
@@ -27,19 +25,27 @@ print_content_block() {
     print_border  # Line 19 is a border
 }
 
-# Function to print the menu (lines 20–23)
+# Menu section - allows wrapping
 print_menu() {
+    # Enable wrapping for the menu section (lines 20–23)
+    tput smam  # Enable wrapping
     for i in {20..23}; do
         printf '%s\n' "Menu line $i (Placeholder)"
     done
     print_border  # Line 24 is a border
 }
 
-# Function to print the input and output lines (bos. lines)
+# Debug and Control log section (lines 25–26)
 print_bos_lines() {
     printf 'bos.DBUG:>>%s\n' "$debug_log"  # Debug log line (line 25)
     printf 'bos.CTRL:>>%s\n' "$ctrl_log"   # Control log line (line 26)
-    printf 'bos.INPT:<< '   # Input prompt (line 27)
+}
+
+# Input line (line 27) - force horizontal scrolling, no wrapping
+print_input_line() {
+    # Disable wrapping for the input line (line 27)
+    tput rmam  # Disable wrapping for line 27
+    printf 'bos.INPT:<< '   # Input prompt on line 27
 }
 
 # Function to capture user input with horizontal scrolling
@@ -67,8 +73,9 @@ main() {
     print_version_line
     print_title_block
     print_content_block
-    print_menu
-    print_bos_lines  # Print input prompt and logs
+    print_menu  # Print menu with wrapping
+    print_bos_lines  # Print debug and control logs
+    print_input_line  # Print input line with no wrapping
     capture_input  # Wait for user input
     process_input  # Process user input and update bos.DBUG and bos.CTRL lines
 }
@@ -84,5 +91,8 @@ while [[ "$exit_program" == false ]]; do
     main
 done
 
-
+# Reset terminal behavior when the program finishes
+cleanup() {
+    tput smam  # Re-enable terminal wrapping at the end
+}
 cleanup
