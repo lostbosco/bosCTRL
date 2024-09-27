@@ -39,37 +39,44 @@ print_menu() {
     for i in {20..23}; do
         printf '%s\n' "Menu line $i (Placeholder)"
     done
-    print_border  # Line 24 is the empty border
+    print_border  # Line 24 is a border
     tput rmam  # Disable wrapping again after the menu is printed
 }
 
-# Function to cdprint the input lines (bos.INPT on line 27)
-print_input_lines() {
-    printf 'bos.DBUG:>>\n'  # Debug log line (now line 25)
-    printf 'bos.CTRL:>>\n'  # Control info line (now line 26)
-    printf 'bos.INPT:<< '   # Input line for user (line 27)
+# Function to print the input and output lines (bos. lines)
+print_bos_lines() {
+    printf 'bos.DBUG:>>\n'  # Debug log line (line 25)
+    printf 'bos.CTRL:>>\n'  # Control log line (line 26)
+    printf 'bos.INPT:<< '   # Input prompt (line 27)
 }
 
 # Function to print the bottom border (line 28)
 print_bottom_border() {
-    print_border
+    print_border  # Line 28 is a border
 }
 
-# Function to capture user input
+# Function to capture user input without reprinting the prompt
 capture_input() {
-    read -p "bos.INPT:<< " user_input  # Capture user input correctly
+    # Move the cursor back to line 27 before capturing input to keep it in place
+    tput cup 26 12  # This moves the cursor to line 27 after the prompt
+    read user_input  # Capture user input on line 27
 }
 
 # Main function to call all other functions in order (top to bottom)
 main() {
+    clear_screen  # Clear the screen BEFORE printing
     print_version_line
     print_title_block
     print_content_block
     print_menu
-    print_input_lines
+    print_bos_lines  # This prints all the bos. lines, including input prompt
     print_bottom_border
-    capture_input  # Capture the user input while printing the correct prompt
-    clear_screen  # Clear the screen AFTER capturing input
+    capture_input  # Capture the user input after printing everything
+}
+
+# Function to clear the screen
+clear_screen() {
+    clear  # Clear the terminal
 }
 
 # Infinite loop to keep the title screen active
