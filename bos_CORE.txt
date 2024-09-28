@@ -1,17 +1,15 @@
 # bos_CORE file
 
 # ---{DEBUG LOG}---
-# This section is overwritten each time the program starts
 DEBUG_LOG_START
 bos.INPT and bos.DISP windows launched.
 DEBUG_LOG_END
 
 # ---{INPT to DISP}---
-# This section holds logs that DISP will display
 INPT_TO_DISP_START
+exit
 INPT_TO_DISP_END
 
 # ---{DISP to INPT}---
-# Reserved for future functionality
 DISP_TO_INPT_START
 DISP_TO_INPT_END

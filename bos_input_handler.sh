@@ -1,14 +1,18 @@
 #!/bin/bash
 
+# Capture the hub's TTY (replace with the correct one)
+hub_tty="/dev/pts/1"  # Update this to your actual hub's TTY
+
 while true; do
-    # Capture user input
+    # Capture user input from the input window
     read -p "bos.INPT:<< " user_input
 
-    # Write input to bos_CORE in the INPT_TO_DISP section
-    sed -i "/INPT_TO_DISP_START/,/INPT_TO_DISP_END/c\INPT_TO_DISP_START\n$user_input\nINPT_TO_DISP_END" bos_CORE
+    # Send the input to the hub's TTY
+    echo "$user_input" > "$hub_tty"
 
-    # Check for 'exit' command to quit
+    # Check for 'exit' command
     if [[ "$user_input" == "exit" ]]; then
+        echo "Exiting input handler..."
         break
     fi
 done

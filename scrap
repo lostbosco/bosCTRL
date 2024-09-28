@@ -1,0 +1,146 @@
+to do:
+
+the screens still dont communicate, but input does communicate with the og panel. rewrite a prompt focusing on the og panel doing all the heavy lifing
+
+last response from chad:
+ChatGPT said:
+ChatGPT
+
+Thanks for the detailed feedback! It sounds like the communication isn't fully syncing as intended. Here's what we can adjust:
+Issues to Address:
+
+    Display Window Not Updating: The display window is showing a static message and not receiving updates.
+    Central Hub Not Logging or Updating: The hub is not displaying the real-time logs.
+    Input Window Logging as Plasma Notifications: The input is being misdirected, likely because the output is sent to an incorrect TTY (or pseudo-terminal).
+
+Adjustments:
+
+    Fixing Input and Communication: We'll redirect the output from bos.INPT to the correct TTY (the original hub terminal).
+    Ensuring Real-Time Updates for the Display Window: We'll add the proper communication mechanism to ensure the display window reads and updates based on the hub’s output.
+    Ensure Hub Logs to Itself: We’ll fix the logging so the original Konsole window logs directly.
+
+Solution Breakdown:
+Step 1: Identify the Correct TTY
+
+In the bos_input_handler.sh, we need to direct the output to the correct TTY (the hub’s Konsole window). First, determine the TTY of the central hub using the command:
+
+bash
+
+tty
+
+Run this command in the main hub Konsole window to see the correct TTY (e.g., /dev/pts/2). We’ll then use that TTY to direct communication from bos.INPT.
+Step 2: Update bos_input_handler.sh:
+
+We’ll now send user input directly to the identified TTY of the hub.
+
+bash
+
+#!/bin/bash
+
+# Capture the hub's TTY (replace with the correct one)
+hub_tty="/dev/pts/2"  # Update this to your actual hub's TTY
+
+while true; do
+    # Capture user input from the input window
+    read -p "bos.INPT:<< " user_input
+
+    # Send the input to the hub's TTY
+    echo "$user_input" > "$hub_tty"
+
+    # Check for 'exit' command
+    if [[ "$user_input" == "exit" ]]; then
+        echo "Exiting input handler..."
+        break
+    fi
+done
+
+Step 3: Update bos_main_hub.sh (Central Hub):
+
+We’ll make sure the hub logs the input and sends the necessary message to the display window.
+
+bash
+
+#!/bin/bash
+
+# Central Hub for managing both windows and handling communication
+echo "Central Hub started. Launching input and display windows..."
+
+# Open the input and display windows
+konsole --profile bos.INPT --hold -e ./bos_input_handler.sh & disown
+konsole --profile bos.DISP --hold -e ./bos_display.sh & disown
+
+# Function to log actions and events to the hub window
+log_to_hub() {
+    local message="$1"
+    echo "[HUB LOG] $message"
+}
+
+# Start the main loop for communication and logging
+while true; do
+    # Capture input from the input window (this should be redirected to this TTY)
+    read -t 1 current_input
+
+    if [[ -n "$current_input" ]]; then
+        log_to_hub "Received input: '$current_input' from bos.INPT"
+        current_input_processed="Processed input: $current_input"
+
+        # Send processed input to display window (this will be shown)
+        echo "$current_input_processed" > bos_display_data.txt
+    fi
+
+    sleep 1  # Wait before checking for updates again
+done
+
+Step 4: Update bos_display.sh (Display Window):
+
+We will make sure the display window reads from the bos_display_data.txt file that the hub writes to.
+
+bash
+
+#!/bin/bash
+
+# Disable user input and hide the cursor
+stty -echo
+tput civis
+
+# Function to display content from the hub
+display_content() {
+    clear
+    echo "□ Title Block (Placeholder)"
+
+    for i in {4..19}; do
+        echo "□ Content line $i (Placeholder)"
+    done
+
+    echo ""
+    echo "□ Menu line 20 (Placeholder)"
+
+    # Read processed input from the file written by the hub
+    display_log=$(cat bos_display_data.txt)
+
+    echo "□ bos.DBUG:>>"
+    echo "□ bos.CTRL:>> $display_log"  # Display the message sent by the hub
+}
+
+# Continuously update the display window
+while true; do
+    display_content
+    sleep 1
+done
+
+# Restore cursor visibility and input when the script exits
+trap "tput cnorm; stty echo" EXIT
+
+Key Changes:
+
+    Correct TTY Redirection: The bos_input_handler.sh script sends user input to the correct TTY of the hub.
+    Centralized Log File for Display: The hub writes processed input to a log file (bos_display_data.txt), which the display window reads and shows.
+    Real-Time Logging in Hub: The hub now displays logs directly in the Konsole window as expected.
+
+Test Plan:
+
+    Run bos_main_hub.sh and ensure both windows launch.
+    Check if input in bos.INPT is sent to the hub, logged, and reflected in bos.DISP.
+    Verify if the display window updates based on the input from the hub.
+
+Let me know how this works!
