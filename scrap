@@ -1,3 +1,15 @@
+formatting:
+line 1 [70 spaces, then] version number (right now v0.3)
+line 2 title line
+line 3 blank line always
+line 4-19 is content display, blank now
+line 20 is empty, always
+line 21- 24 are menus
+line 25 is empty, always
+line 26 is bos.CTRL:>>
+line 27 is bos.DBUG:>>
+line 28 is always empty
+
 to do:
 
 the screens still dont communicate, but input does communicate with the og panel. rewrite a prompt focusing on the og panel doing all the heavy lifing
@@ -144,3 +156,347 @@ Test Plan:
     Verify if the display window updates based on the input from the hub.
 
 Let me know how this works!
+
+
+# bos_CORE file
+
+# ---{DEBUG LOG}---
+DEBUG_LOG_START
+bos.INPT and bos.DISP windows launched.
+DEBUG_LOG_END
+
+# ---{INPT to DISP}---
+INPT_TO_DISP_START
+exit
+INPT_TO_DISP_END
+
+# ---{DISP to INPT}---
+DISP_TO_INPT_START
+DISP_TO_INPT_END
+
+--------[display code]
+
+#!/bin/bash
+
+# Disable user input and hide the cursor
+stty -echo
+tput civis
+
+# Function to display content from the hub
+display_content() {
+    clear
+    echo "□ Title Block (Placeholder)"
+
+    for i in {4..19}; do
+        echo "□ Content line $i (Placeholder)"
+    done
+
+    echo ""
+    echo "□ Menu line 20 (Placeholder)"
+
+    # Read processed input from the file written by the hub
+    display_log=$(cat bos_display_data.txt)
+
+    echo "□ bos.DBUG:>>"
+    echo "□ bos.CTRL:>> $display_log"  # Display the message sent by the hub
+}
+
+# Continuously update the display window
+while true; do
+    display_content
+    sleep 1
+done
+
+# Restore cursor visibility and input when the script exits
+trap "tput cnorm; stty echo" EXIT
+
+
+--------[input handler]
+#!/bin/bash
+
+# Capture the hub's TTY (replace with the correct one)
+hub_tty="/dev/pts/1"  # Update this to your actual hub's TTY
+
+while true; do
+    # Capture user input from the input window
+    read -p "bos.INPT:<< " user_input
+
+    # Send the input to the hub's TTY
+    echo "$user_input" > "$hub_tty"
+
+    # Check for 'exit' command
+    if [[ "$user_input" == "exit" ]]; then
+        echo "Exiting input handler..."
+        break
+    fi
+done
+--------[bos main]
+#!/bin/bash
+
+# Clear debug log in bos_CORE on start
+sed -i "/DEBUG_LOG_START/,/DEBUG_LOG_END/c\DEBUG_LOG_START\nProgram Started\nDEBUG_LOG_END" bos_CORE
+
+# Main loop to handle user input and update display
+while true; do
+    # Check if input file exists and read the input
+    if [[ -f /tmp/bos_input ]]; then
+        user_input=$(cat /tmp/bos_input)
+        rm /tmp/bos_input  # Remove the file after reading it
+
+        # Process the input
+        if [[ "$user_input" == "exit" ]]; then
+            echo "Exiting..." > /tmp/bos_debug_log
+            break
+        else
+            # Write to debug log
+            sed -i "/DEBUG_LOG_START/,/DEBUG_LOG_END/c\DEBUG_LOG_START\nYou entered: '$user_input'\nDEBUG_LOG_END" bos_CORE
+        fi
+
+        sleep 1  # Wait for display window to refresh
+    fi
+    sleep 0.5  # Adjust timing as needed
+done
+--------[bos main hub]
+#!/bin/bash
+
+# Central Hub for managing both windows and handling communication
+echo "Central Hub started. Launching input and display windows..."
+
+# Open the input and display windows
+konsole --profile bos.INPT --hold -e ./bos_input_handler.sh & disown
+konsole --profile bos.DISP --hold -e ./bos_display.sh & disown
+
+# Function to log actions and events to the hub window
+log_to_hub() {
+    local message="$1"
+    echo "[HUB LOG] $message"
+}
+
+# Start the main loop for communication and logging
+while true; do
+    # Capture input from the input window (this should be redirected to this TTY)
+    read -t 1 current_input
+
+    if [[ -n "$current_input" ]]; then
+        log_to_hub "Received input: '$current_input' from bos.INPT"
+        current_input_processed="Processed input: $current_input"
+
+        # Send processed input to display window (this will be shown)
+        echo "$current_input_processed" > bos_display_data.txt
+    fi
+
+    sleep 1  # Wait before checking for updates again
+done
+----------[aunch]
+#!/bin/bash
+
+# Define the bos_CORE file path with .txt extension
+core_file="bos_CORE.txt"
+
+# Ensure bos_CORE file exists
+if [ ! -f "$core_file" ]; then
+    touch "$core_file"
+    echo -e "# bos_CORE file\n\n# ---{DEBUG LOG}---\nDEBUG_LOG_START\nDEBUG_LOG_END\n\n# ---{INPT to DISP}---\nINPT_TO_DISP_START\nINPT_TO_DISP_END\n\n# ---{DISP to INPT}---\nDISP_TO_INPT_START\nDISP_TO_INPT_END" > "$core_file"
+fi
+
+# Function to log to bos_CORE
+log_to_core() {
+    local log_message="$1"
+    sed -i "/DEBUG_LOG_START/,/DEBUG_LOG_END/c\DEBUG_LOG_START\n$log_message\nDEBUG_LOG_END" "$core_file"
+}
+
+# Log script start in bos_CORE
+log_to_core "Script started."
+
+# Open the first Konsole window for input using the "bos.INPT" profile
+konsole --profile bos.INPT --hold -e ./bos_input_handler.sh & disown
+
+# Open the second Konsole window for display using the "bos.DISP" profile
+konsole --profile bos.DISP --hold -e ./bos_display.sh & disown
+
+# Log that the windows have been opened
+log_to_core "bos.INPT and bos.DISP windows launched."
+
+
+-----------my notes below:
+- updated file tree, consistent naming scheme:
+├── bosCORE.txt
+├── bosCTRL.sh
+├── bosDISP.sh
+├── bosAXIS.sh
+├── bosINPT.sh
+
+ok so here the existing code, i took some time to think about it and i want to apporach this ina more consolidated way.
+
+simplified logic of scripts:
+- bosAXIS.sh
+-- this receives the command from bosCTRL
+-- launches 2 other windows
+(loops here until 'exit' command)
+-- waits to receive next input from bosINPT window
+-- when it receives a signal, it outputs the new display to bosDISP
+-- displays what the program is doing, debug logs, and user inputs each on a new line, continously printing like a receipt of activity (this solves a lot of debugging and logging issues downstream, there is no need to save any of this data as we can capture and debug in real time)
+(repeats loop here)
+-- bosAXIS will be the centeral hub for formatting later. it needs to hold the functions that receive data from other tables for menus and the functions for content. this should do all the translating, so display is just printing. ideally this is the script we spend most of our time editing after nailing down funcitonality.
+- bosCORE.txt
+-- long term data storage, uneeded right now, remove all functionality from this
+- bosCTRL
+-- sends signal to AXIS to do its thing, prevoius called launch bosctrl
+- bosDISP
+-- prints whatever is sent to it
+-- waits for received signal from bosAXIS
+-- user should not be able to type here
+- bosINPT
+-- receives input
+-- sends it to bosAXIS
+
+konsole window logic:
+- window 1
+-- this is the konsole for which i execute the original run command, and will be used for debugging and logging of events, our program should take it over and start issues command through it to the other windows
+-- receives data from inpt, runs it through functions, and outputs the data to the display function that should send data to the display
+- window 2
+-- usr.INPT:<< is in this window
+-- takes whatever the user inputs after pressing enter and sends it to window 1
+- window 3
+-- displays printed data
+
+* one note: the display shell might not be nessecary, might be better to loop it into INPT since these two scripts really serve the same function of managing across windows, with acis doing the lifting of processing the data.
+
+
+this is just my suggestion, i am open to rewriting in any direction. lemme know what you think :D
+
+
+current bug list:
+- display doesnt refresh
+- entereing in 'exit' doesnt close wither window
+- the first column should have an EMPTY space to pad the data visually
+- i assume the content lines printed but they dont have any placeholder text for debugging
+
+
+
+
+
+current bugs:
+- it isn't a bug but you made a new temp file for display, anything that is temporary should be inputed into the original konsole that launched the two other windows, and that same original window can then send the data to print the DISP window.
+- exit is not working
+- i dont see any functionality from the third window. i do not like this direction. please run down our options and the things we've done, and i think we might need to find another right lest we become sunk in our cost. i dont see evidence that we're closer to having these windows talk
+
+
+
+
+
+
+
+
+
+
+
+
+bash bosAXIS.sh
+localuser:deck being added to access control list
+(deck@steamdeck base)$ bash bosAXIS.sh
+Menu:
+1. Enter data to display
+2. Exit
+Select an option: bash bosAXIS.sh
+Invalid option. Try again.
+Menu:
+1. Enter data to display
+2. Exit
+Select an option:
+
+
+
+
+─────────────────────────────────────────────────────────────────────────────────────
+Displaying data from bosAXIS:
+
+
+
+
+
+
+
+
+
+─────────────────────────────────────────────────────────────────────────────────────
+-bash: 2: command not found
+(127)(deck@steamdeck base)$ 2
+-bash: 2: command not found
+(127)(deck@steamdeck base)$
+[bos_sessi0:bash*                                         "steamdeck" 02:06 28-Sep-24
+
+
+
+
+
+
+ok when we switched course to tmux you mentioned we would have TWO windows, and in one of those windows we would do input and the toerh would be display. i only wanted to use tmux in the first window that handle input so we can also do logging in debug in the tmux pane. since our switched we lost most of the functionality we had built before, so i'd like to start building that back in.
+
+my idea was this: our original window is also handling user input and doesn't populate window 2 until the user hits enter. after enter window 2 will print the results from the functions executed from window 1, pane 1. window 1 pane 2 will show all the deubggigng and log messages.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----top of screen---
+1. Enter data to display
+2. Exit
+Select an option: echo "Top Left Pane: Logging"
+Invalid option. Try again.
+Menu:
+1. Enter data to display
+2. Exit
+Select an option:
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+localuser:deck being added to access control list
+(deck@steamdeck base)$ echo "Bottom Left Pane: Input"
+Bottom Left Pane: Input
+(deck@steamdeck base)$
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Top Right Pane: Debugging
+(deck@steamdeck base)$ ^C
+(130)(deck@steamdeck base)$ ^C
+(130)(deck@steamdeck base)$
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Displaying data from bosAXIS:
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+localuser:deck being added to access control list
+(deck@steamdeck base)$ test
+(1)(deck@steamdeck base)$ 1
+-bash: 1: command not found
+(127)(deck@steamdeck base)$ 2
+-bash: 2: command not found
+(127)(deck@steamdeck base)$ 2
+-bash: 2: command not found
+(127)(deck@steamdeck base)$
+──────────────────────────────────────────────────────────────┬─────────────────────────────────────────────────────────────
+(deck@steamdeck base)$ cd BOSctrl^C                           │localuser:deck being added to access control list
+                                                              │(deck@steamdeck base)$
+(130)(deck@steamdeck base)$ ls                                │
+                                                              │
+[bos_sessi0:bash*                                                                                "steamdeck" 02:51 28-Sep-24
+--------------- bottom of screen
+
+
+
+

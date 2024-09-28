@@ -1,0 +1,290 @@
+Sat Sep 28 04:25:22 PM EDT 2024: Starting application...
+Sat Sep 28 04:25:22 PM EDT 2024: bosBASE.sh started.
+Sat Sep 28 04:25:22 PM EDT 2024: bosBASE.sh setup complete.
+Sat Sep 28 04:25:22 PM EDT 2024: bosSYST.sh started.
+Sat Sep 28 04:25:22 PM EDT 2024: bosSYST.sh setup complete.
+Sat Sep 28 04:25:22 PM EDT 2024: bosPMGR.sh started.
+Sat Sep 28 04:25:22 PM EDT 2024: bosPMGR.sh setup complete.
+Sat Sep 28 04:25:22 PM EDT 2024: All scripts loaded successfully.
+Sat Sep 28 04:25:26 PM EDT 2024: Invalid input 'test'
+Sat Sep 28 04:25:26 PM EDT 2024: Invalid input 't;lkjadf;flkja'
+Sat Sep 28 04:25:27 PM EDT 2024: Invalid input 'dafl;kadjfad'
+Sat Sep 28 04:25:29 PM EDT 2024: Invalid input 'syst'
+Sat Sep 28 04:25:50 PM EDT 2024: Exiting program from system settings.
+Sat Sep 28 04:25:55 PM EDT 2024: Starting application...
+Sat Sep 28 04:25:55 PM EDT 2024: bosBASE.sh started.
+Sat Sep 28 04:25:55 PM EDT 2024: bosBASE.sh setup complete.
+Sat Sep 28 04:25:55 PM EDT 2024: bosSYST.sh started.
+Sat Sep 28 04:25:55 PM EDT 2024: bosSYST.sh setup complete.
+Sat Sep 28 04:25:55 PM EDT 2024: bosPMGR.sh started.
+Sat Sep 28 04:25:55 PM EDT 2024: bosPMGR.sh setup complete.
+Sat Sep 28 04:25:55 PM EDT 2024: All scripts loaded successfully.
+Sat Sep 28 04:25:56 PM EDT 2024: Invalid input 'test'
+Sat Sep 28 04:31:01 PM EDT 2024: Exiting program from page manager.
+Sat Sep 28 04:31:03 PM EDT 2024: Starting application...
+Sat Sep 28 04:31:03 PM EDT 2024: bosBASE.sh started.
+Sat Sep 28 04:31:03 PM EDT 2024: bosBASE.sh setup complete.
+Sat Sep 28 04:31:03 PM EDT 2024: bosSYST.sh started.
+Sat Sep 28 04:31:03 PM EDT 2024: bosSYST.sh setup complete.
+Sat Sep 28 04:31:03 PM EDT 2024: bosPMGR.sh started.
+Sat Sep 28 04:31:03 PM EDT 2024: bosPMGR.sh setup complete.
+Sat Sep 28 04:31:03 PM EDT 2024: All scripts loaded successfully.
+Sat Sep 28 04:31:07 PM EDT 2024: Invalid input 'test;lkadjf'
+Sat Sep 28 04:31:07 PM EDT 2024: Invalid input 'ad;lfkja'
+Sat Sep 28 04:31:08 PM EDT 2024: Invalid input 'fda;flkjadf'
+Sat Sep 28 04:34:41 PM EDT 2024: Exiting program from system settings.
+Sat Sep 28 04:34:43 PM EDT 2024: Starting application...
+Sat Sep 28 04:34:43 PM EDT 2024: bosBASE.sh started.
+Sat Sep 28 04:34:43 PM EDT 2024: bosBASE.sh setup complete.
+Sat Sep 28 04:34:43 PM EDT 2024: bosSYST.sh started.
+Sat Sep 28 04:34:43 PM EDT 2024: bosSYST.sh setup complete.
+Sat Sep 28 04:34:43 PM EDT 2024: bosPMGR.sh started.
+Sat Sep 28 04:34:43 PM EDT 2024: bosPMGR.sh setup complete.
+Sat Sep 28 04:34:43 PM EDT 2024: All scripts loaded successfully.
+Sat Sep 28 04:35:58 PM EDT 2024: Invalid input ';aldkjfa'
+Sat Sep 28 04:35:59 PM EDT 2024: Invalid input ';lakdjf;alkjd'
+Sat Sep 28 04:36:01 PM EDT 2024: Invalid input 'page'
+Sat Sep 28 04:36:03 PM EDT 2024: Invalid input 'page'
+Sat Sep 28 04:36:05 PM EDT 2024: Invalid input 'page'
+Sat Sep 28 04:41:31 PM EDT 2024: Exiting program from system settings.
+Sat Sep 28 04:41:33 PM EDT 2024: Starting application...
+Sat Sep 28 04:41:33 PM EDT 2024: bosBASE.sh started.
+Sat Sep 28 04:41:33 PM EDT 2024: bosBASE.sh setup complete.
+Sat Sep 28 04:41:33 PM EDT 2024: bosSYST.sh started.
+Sat Sep 28 04:41:33 PM EDT 2024: bosSYST.sh setup complete.
+Sat Sep 28 04:41:33 PM EDT 2024: bosPMGR.sh started.
+Sat Sep 28 04:41:33 PM EDT 2024: bosPMGR.sh setup complete.
+Sat Sep 28 04:41:33 PM EDT 2024: All scripts loaded successfully.
+Sat Sep 28 04:41:34 PM EDT 2024: Invalid input 'dafkhdfa'
+Sat Sep 28 04:41:34 PM EDT 2024: Invalid input 'daf'
+Sat Sep 28 04:41:35 PM EDT 2024: Invalid input 'fda'
+Sat Sep 28 04:41:35 PM EDT 2024: Invalid input ''
+Sat Sep 28 04:41:35 PM EDT 2024: Invalid input 'dsaf'
+Sat Sep 28 04:43:57 PM EDT 2024: Exiting program.
+Sat Sep 28 04:43:58 PM EDT 2024: Starting application...
+Sat Sep 28 04:43:58 PM EDT 2024: bosBASE.sh started.
+Sat Sep 28 04:43:58 PM EDT 2024: bosBASE.sh setup complete.
+Sat Sep 28 04:43:58 PM EDT 2024: bosSYST.sh started.
+Sat Sep 28 04:43:58 PM EDT 2024: bosSYST.sh setup complete.
+Sat Sep 28 04:43:58 PM EDT 2024: bosPMGR.sh started.
+Sat Sep 28 04:43:58 PM EDT 2024: bosPMGR.sh setup complete.
+Sat Sep 28 04:43:58 PM EDT 2024: All scripts loaded successfully.
+Sat Sep 28 04:44:00 PM EDT 2024: Invalid input ';ladkjf'
+Sat Sep 28 04:44:02 PM EDT 2024: Invalid input 'page'
+Sat Sep 28 04:53:58 PM EDT 2024: Exiting program from system settings.
+Sat Sep 28 04:54:00 PM EDT 2024: Starting application...
+Sat Sep 28 04:54:00 PM EDT 2024: bosBASE.sh started.
+Sat Sep 28 04:54:00 PM EDT 2024: bosBASE.sh setup complete.
+Sat Sep 28 04:54:00 PM EDT 2024: bosSYST.sh started.
+Sat Sep 28 04:54:00 PM EDT 2024: bosSYST.sh setup complete.
+Sat Sep 28 04:54:00 PM EDT 2024: bosPMGR.sh started.
+Sat Sep 28 04:54:00 PM EDT 2024: bosPMGR.sh setup complete.
+Sat Sep 28 04:54:00 PM EDT 2024: All scripts loaded successfully.
+Sat Sep 28 04:54:04 PM EDT 2024: Invalid input 'syste'
+Sat Sep 28 04:54:28 PM EDT 2024: Exiting program from system settings.
+Sat Sep 28 04:54:30 PM EDT 2024: Starting application...
+Sat Sep 28 04:54:30 PM EDT 2024: bosBASE.sh started.
+Sat Sep 28 04:54:30 PM EDT 2024: bosBASE.sh setup complete.
+Sat Sep 28 04:54:30 PM EDT 2024: bosSYST.sh started.
+Sat Sep 28 04:54:30 PM EDT 2024: bosSYST.sh setup complete.
+Sat Sep 28 04:54:30 PM EDT 2024: bosPMGR.sh started.
+Sat Sep 28 04:54:30 PM EDT 2024: bosPMGR.sh setup complete.
+Sat Sep 28 04:54:30 PM EDT 2024: All scripts loaded successfully.
+Sat Sep 28 04:54:32 PM EDT 2024: Invalid input 'test'
+Sat Sep 28 04:54:33 PM EDT 2024: Invalid input 'hi'
+Sat Sep 28 04:54:42 PM EDT 2024: Exiting program from system settings.
+Sat Sep 28 04:54:43 PM EDT 2024: Starting application...
+Sat Sep 28 04:54:43 PM EDT 2024: bosBASE.sh started.
+Sat Sep 28 04:54:43 PM EDT 2024: bosBASE.sh setup complete.
+Sat Sep 28 04:54:43 PM EDT 2024: bosSYST.sh started.
+Sat Sep 28 04:54:43 PM EDT 2024: bosSYST.sh setup complete.
+Sat Sep 28 04:54:43 PM EDT 2024: bosPMGR.sh started.
+Sat Sep 28 04:54:43 PM EDT 2024: bosPMGR.sh setup complete.
+Sat Sep 28 04:54:43 PM EDT 2024: All scripts loaded successfully.
+Sat Sep 28 04:54:45 PM EDT 2024: Invalid input 'test'
+Sat Sep 28 04:54:46 PM EDT 2024: Invalid input 'hi'
+Sat Sep 28 04:54:48 PM EDT 2024: Invalid input 'page'
+Sat Sep 28 05:03:34 PM EDT 2024: Exiting program.
+Sat Sep 28 05:03:35 PM EDT 2024: Starting application...
+Sat Sep 28 05:03:35 PM EDT 2024: bosBASE.sh started.
+Sat Sep 28 05:03:35 PM EDT 2024: bosBASE.sh setup complete.
+Sat Sep 28 05:03:35 PM EDT 2024: bosSYST.sh started.
+Sat Sep 28 05:03:35 PM EDT 2024: bosSYST.sh setup complete.
+Sat Sep 28 05:03:35 PM EDT 2024: bosPMGR.sh started.
+Sat Sep 28 05:03:35 PM EDT 2024: bosPMGR.sh setup complete.
+Sat Sep 28 05:03:35 PM EDT 2024: All scripts loaded successfully.
+Sat Sep 28 05:04:06 PM EDT 2024: Exiting program.
+Sat Sep 28 05:04:08 PM EDT 2024: Starting application...
+Sat Sep 28 05:04:08 PM EDT 2024: bosBASE.sh started.
+Sat Sep 28 05:04:08 PM EDT 2024: bosBASE.sh setup complete.
+Sat Sep 28 05:04:08 PM EDT 2024: bosSYST.sh started.
+Sat Sep 28 05:04:08 PM EDT 2024: bosSYST.sh setup complete.
+Sat Sep 28 05:04:08 PM EDT 2024: bosPMGR.sh started.
+Sat Sep 28 05:04:08 PM EDT 2024: bosPMGR.sh setup complete.
+Sat Sep 28 05:04:08 PM EDT 2024: All scripts loaded successfully.
+Sat Sep 28 05:04:09 PM EDT 2024: Invalid input 'test'
+Sat Sep 28 05:04:10 PM EDT 2024: Invalid input 'test'
+Sat Sep 28 05:04:40 PM EDT 2024: Invalid input '.glob' in system settings.
+Sat Sep 28 05:08:08 PM EDT 2024: Exiting program from system settings.
+Sat Sep 28 05:08:10 PM EDT 2024: Starting application...
+Sat Sep 28 05:08:10 PM EDT 2024: bosBASE.sh started.
+Sat Sep 28 05:08:10 PM EDT 2024: bosBASE.sh setup complete.
+Sat Sep 28 05:08:10 PM EDT 2024: bosSYST.sh started.
+Sat Sep 28 05:08:10 PM EDT 2024: bosSYST.sh setup complete.
+Sat Sep 28 05:08:10 PM EDT 2024: bosPMGR.sh started.
+Sat Sep 28 05:08:10 PM EDT 2024: bosPMGR.sh setup complete.
+Sat Sep 28 05:08:10 PM EDT 2024: All scripts loaded successfully.
+Sat Sep 28 05:08:12 PM EDT 2024: Invalid input 'test'
+Sat Sep 28 05:08:12 PM EDT 2024: Invalid input 'test'
+Sat Sep 28 05:08:13 PM EDT 2024: Invalid input 'tes'
+Sat Sep 28 05:08:13 PM EDT 2024: Invalid input 'te'
+Sat Sep 28 05:11:31 PM EDT 2024: Exiting program.
+Sat Sep 28 05:12:35 PM EDT 2024: Starting application...
+Sat Sep 28 05:12:35 PM EDT 2024: bosBASE.sh started.
+Sat Sep 28 05:12:35 PM EDT 2024: bosBASE.sh setup complete.
+Sat Sep 28 05:12:35 PM EDT 2024: bosSYST.sh started.
+Sat Sep 28 05:12:35 PM EDT 2024: bosSYST.sh setup complete.
+Sat Sep 28 05:12:35 PM EDT 2024: bosPMGR.sh started.
+Sat Sep 28 05:12:35 PM EDT 2024: bosPMGR.sh setup complete.
+Sat Sep 28 05:12:35 PM EDT 2024: All scripts loaded successfully.
+Sat Sep 28 05:15:51 PM EDT 2024: Invalid input '.EXITY'
+Sat Sep 28 05:15:53 PM EDT 2024: Invalid input '.EXIT'
+Sat Sep 28 05:15:54 PM EDT 2024: Exiting program.
+Sat Sep 28 05:15:56 PM EDT 2024: Starting application...
+Sat Sep 28 05:15:56 PM EDT 2024: bosBASE.sh started.
+Sat Sep 28 05:15:56 PM EDT 2024: bosBASE.sh setup complete.
+Sat Sep 28 05:15:56 PM EDT 2024: bosSYST.sh started.
+Sat Sep 28 05:15:56 PM EDT 2024: bosSYST.sh setup complete.
+Sat Sep 28 05:15:56 PM EDT 2024: bosPMGR.sh started.
+Sat Sep 28 05:15:56 PM EDT 2024: bosPMGR.sh setup complete.
+Sat Sep 28 05:15:56 PM EDT 2024: All scripts loaded successfully.
+Sat Sep 28 05:15:59 PM EDT 2024: Invalid input 'testkjladf;klja'
+Sat Sep 28 05:16:00 PM EDT 2024: Invalid input 'daklf;jad'
+Sat Sep 28 05:16:01 PM EDT 2024: Invalid input 'fadfsj;fad'
+Sat Sep 28 05:16:01 PM EDT 2024: Invalid input 'adfjkladf'
+Sat Sep 28 05:16:02 PM EDT 2024: Invalid input '[padfsjkladsf'
+Sat Sep 28 05:17:47 PM EDT 2024: Exiting program.
+Sat Sep 28 05:18:01 PM EDT 2024: Starting application...
+Sat Sep 28 05:18:01 PM EDT 2024: bosBASE.sh started.
+Sat Sep 28 05:18:01 PM EDT 2024: bosBASE.sh setup complete.
+Sat Sep 28 05:18:01 PM EDT 2024: bosSYST.sh started.
+Sat Sep 28 05:18:01 PM EDT 2024: bosSYST.sh setup complete.
+Sat Sep 28 05:18:01 PM EDT 2024: bosPMGR.sh started.
+Sat Sep 28 05:18:01 PM EDT 2024: bosPMGR.sh setup complete.
+Sat Sep 28 05:18:01 PM EDT 2024: All scripts loaded successfully.
+Sat Sep 28 05:18:03 PM EDT 2024: Invalid input 'da;lkfj'
+Sat Sep 28 05:18:03 PM EDT 2024: Invalid input 'adlkf;jadf'
+Sat Sep 28 05:18:04 PM EDT 2024: Invalid input 'adsf;lkjdafa'
+Sat Sep 28 05:20:01 PM EDT 2024: Exiting program.
+Sat Sep 28 05:20:43 PM EDT 2024: Starting application...
+Sat Sep 28 05:20:43 PM EDT 2024: bosBASE.sh started.
+Sat Sep 28 05:20:43 PM EDT 2024: bosBASE.sh setup complete.
+Sat Sep 28 05:20:43 PM EDT 2024: bosSYST.sh started.
+Sat Sep 28 05:20:43 PM EDT 2024: bosSYST.sh setup complete.
+Sat Sep 28 05:20:43 PM EDT 2024: bosPMGR.sh started.
+Sat Sep 28 05:20:43 PM EDT 2024: bosPMGR.sh setup complete.
+Sat Sep 28 05:20:43 PM EDT 2024: All scripts loaded successfully.
+Sat Sep 28 05:20:46 PM EDT 2024: Invalid input ';adslkjfa'
+Sat Sep 28 05:20:47 PM EDT 2024: Invalid input 'adsf;kljadf;kj'
+Sat Sep 28 05:29:45 PM EDT 2024: Exiting program.
+Sat Sep 28 05:29:47 PM EDT 2024: Starting application...
+Sat Sep 28 05:29:47 PM EDT 2024: bosBASE.sh started.
+Sat Sep 28 05:29:47 PM EDT 2024: bosBASE.sh setup complete.
+Sat Sep 28 05:29:47 PM EDT 2024: bosSYST.sh started.
+Sat Sep 28 05:29:47 PM EDT 2024: bosSYST.sh setup complete.
+Sat Sep 28 05:29:47 PM EDT 2024: bosPMGR.sh started.
+Sat Sep 28 05:29:47 PM EDT 2024: bosPMGR.sh setup complete.
+Sat Sep 28 05:29:47 PM EDT 2024: All scripts loaded successfully.
+Sat Sep 28 05:29:51 PM EDT 2024: Invalid input 'la;dksfjlad;ksjf'
+Sat Sep 28 05:29:52 PM EDT 2024: Invalid input 'dfjkdjafkl'
+Sat Sep 28 05:33:47 PM EDT 2024: Exiting program from system settings.
+Sat Sep 28 05:33:50 PM EDT 2024: Starting application...
+Sat Sep 28 05:33:50 PM EDT 2024: bosBASE.sh started.
+Sat Sep 28 05:33:50 PM EDT 2024: bosBASE.sh setup complete.
+Sat Sep 28 05:33:50 PM EDT 2024: bosSYST.sh started.
+Sat Sep 28 05:33:50 PM EDT 2024: bosSYST.sh setup complete.
+Sat Sep 28 05:33:50 PM EDT 2024: bosPMGR.sh started.
+Sat Sep 28 05:33:50 PM EDT 2024: bosPMGR.sh setup complete.
+Sat Sep 28 05:33:50 PM EDT 2024: All scripts loaded successfully.
+Sat Sep 28 05:36:27 PM EDT 2024: Exiting program.
+Sat Sep 28 05:37:07 PM EDT 2024: Starting application...
+Sat Sep 28 05:37:07 PM EDT 2024: bosBASE.sh started.
+Sat Sep 28 05:37:07 PM EDT 2024: bosBASE.sh setup complete.
+Sat Sep 28 05:37:07 PM EDT 2024: bosSYST.sh started.
+Sat Sep 28 05:37:07 PM EDT 2024: bosSYST.sh setup complete.
+Sat Sep 28 05:37:07 PM EDT 2024: bosPMGR.sh started.
+Sat Sep 28 05:37:07 PM EDT 2024: bosPMGR.sh setup complete.
+Sat Sep 28 05:37:07 PM EDT 2024: All scripts loaded successfully.
+Sat Sep 28 05:37:09 PM EDT 2024: Invalid input 'test'
+Sat Sep 28 05:37:10 PM EDT 2024: Invalid input 'test'
+Sat Sep 28 05:37:11 PM EDT 2024: Invalid input ';dkljf;alkjdf'
+Sat Sep 28 05:37:11 PM EDT 2024: Invalid input 'af;aldkjfa'
+Sat Sep 28 05:37:12 PM EDT 2024: Invalid input 'df;aldkjfa'
+Sat Sep 28 05:37:13 PM EDT 2024: Invalid input 'fd;aldkfja'
+Sat Sep 28 05:37:15 PM EDT 2024: Invalid input 'fa;ldkjfa;jf;ajdlksflkajdf;lkajf;lkdjf'
+Sat Sep 28 05:38:46 PM EDT 2024: Exiting program.
+Sat Sep 28 05:39:17 PM EDT 2024: Starting application...
+Sat Sep 28 05:39:17 PM EDT 2024: bosBASE.sh started.
+Sat Sep 28 05:39:17 PM EDT 2024: bosBASE.sh setup complete.
+Sat Sep 28 05:39:17 PM EDT 2024: bosSYST.sh started.
+Sat Sep 28 05:39:17 PM EDT 2024: bosSYST.sh setup complete.
+Sat Sep 28 05:39:17 PM EDT 2024: bosPMGR.sh started.
+Sat Sep 28 05:39:17 PM EDT 2024: bosPMGR.sh setup complete.
+Sat Sep 28 05:39:17 PM EDT 2024: All scripts loaded successfully.
+Sat Sep 28 05:39:19 PM EDT 2024: Invalid input ';lakdjf;lakj'
+Sat Sep 28 05:39:59 PM EDT 2024: Starting application...
+Sat Sep 28 05:39:59 PM EDT 2024: bosBASE.sh started.
+Sat Sep 28 05:39:59 PM EDT 2024: bosBASE.sh setup complete.
+Sat Sep 28 05:39:59 PM EDT 2024: bosSYST.sh started.
+Sat Sep 28 05:39:59 PM EDT 2024: bosSYST.sh setup complete.
+Sat Sep 28 05:39:59 PM EDT 2024: bosPMGR.sh started.
+Sat Sep 28 05:39:59 PM EDT 2024: bosPMGR.sh setup complete.
+Sat Sep 28 05:39:59 PM EDT 2024: All scripts loaded successfully.
+Sat Sep 28 05:40:29 PM EDT 2024: Exiting program.
+Sat Sep 28 05:40:30 PM EDT 2024: Starting application...
+Sat Sep 28 05:40:30 PM EDT 2024: bosBASE.sh started.
+Sat Sep 28 05:40:30 PM EDT 2024: bosBASE.sh setup complete.
+Sat Sep 28 05:40:30 PM EDT 2024: bosSYST.sh started.
+Sat Sep 28 05:40:30 PM EDT 2024: bosSYST.sh setup complete.
+Sat Sep 28 05:40:30 PM EDT 2024: bosPMGR.sh started.
+Sat Sep 28 05:40:30 PM EDT 2024: bosPMGR.sh setup complete.
+Sat Sep 28 05:40:30 PM EDT 2024: All scripts loaded successfully.
+Sat Sep 28 05:40:33 PM EDT 2024: Invalid input 'adjfl;adjf'
+Sat Sep 28 05:40:33 PM EDT 2024: Invalid input 'fad'
+Sat Sep 28 05:40:33 PM EDT 2024: Invalid input 'fa'
+Sat Sep 28 05:40:33 PM EDT 2024: Invalid input 'd'
+Sat Sep 28 05:40:33 PM EDT 2024: Invalid input ''
+Sat Sep 28 05:40:34 PM EDT 2024: Invalid input 'da'
+Sat Sep 28 05:42:43 PM EDT 2024: Exiting program.
+Sat Sep 28 05:42:44 PM EDT 2024: Starting application...
+Sat Sep 28 05:42:44 PM EDT 2024: bosBASE.sh started.
+Sat Sep 28 05:42:44 PM EDT 2024: bosBASE.sh setup complete.
+Sat Sep 28 05:42:44 PM EDT 2024: bosSYST.sh started.
+Sat Sep 28 05:42:44 PM EDT 2024: bosSYST.sh setup complete.
+Sat Sep 28 05:42:44 PM EDT 2024: bosPMGR.sh started.
+Sat Sep 28 05:42:44 PM EDT 2024: bosPMGR.sh setup complete.
+Sat Sep 28 05:42:44 PM EDT 2024: All scripts loaded successfully.
+Sat Sep 28 05:44:14 PM EDT 2024: Exiting program.
+Sat Sep 28 05:44:15 PM EDT 2024: Starting application...
+Sat Sep 28 05:44:15 PM EDT 2024: bosBASE.sh started.
+Sat Sep 28 05:44:15 PM EDT 2024: bosSYST.sh started.
+Sat Sep 28 05:44:15 PM EDT 2024: bosSYST.sh setup complete.
+Sat Sep 28 05:44:15 PM EDT 2024: bosPMGR.sh started.
+Sat Sep 28 05:44:15 PM EDT 2024: bosPMGR.sh setup complete.
+Sat Sep 28 05:44:15 PM EDT 2024: All scripts loaded successfully.
+Sat Sep 28 05:44:35 PM EDT 2024: Starting application...
+Sat Sep 28 05:44:35 PM EDT 2024: bosBASE.sh started.
+Sat Sep 28 05:44:35 PM EDT 2024: bosSYST.sh started.
+Sat Sep 28 05:44:35 PM EDT 2024: bosSYST.sh setup complete.
+Sat Sep 28 05:44:35 PM EDT 2024: bosPMGR.sh started.
+Sat Sep 28 05:44:35 PM EDT 2024: bosPMGR.sh setup complete.
+Sat Sep 28 05:44:35 PM EDT 2024: All scripts loaded successfully.
+Sat Sep 28 05:47:13 PM EDT 2024: Starting application...
+Sat Sep 28 05:47:13 PM EDT 2024: bosBASE.sh started.
+Sat Sep 28 05:47:13 PM EDT 2024: bosBASE.sh setup complete.
+Sat Sep 28 05:47:13 PM EDT 2024: bosSYST.sh started.
+Sat Sep 28 05:47:13 PM EDT 2024: bosSYST.sh setup complete.
+Sat Sep 28 05:47:13 PM EDT 2024: bosPMGR.sh started.
+Sat Sep 28 05:47:13 PM EDT 2024: bosPMGR.sh setup complete.
+Sat Sep 28 05:47:13 PM EDT 2024: All scripts loaded successfully.
+Sat Sep 28 05:47:16 PM EDT 2024: Invalid input 'test'
