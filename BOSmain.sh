@@ -1,98 +1,83 @@
 #!/bin/bash
 
-# Function to print a border (empty line)
-print_border() {
-    printf '%78s\n' ""  # Print an empty border line
+# Function to start a tmux session with two new windows
+start_tmux_session() {
+    # Create a detached tmux session
+    tmux new-session -d -s tui_session
+
+    # Create the second window for TUI display (main window for output)
+    tmux new-window -d -t tui_session:1 -n 'Main TUI'
+    tmux send-keys -t tui_session:1 'bash -c "main_tui_loop"' C-m  # Run TUI loop in this window
+
+    # Create the third window for input (size 4 lines, 12 columns)
+    tmux new-window -d -t tui_session:2 -n 'User Input'
+    tmux send-keys -t tui_session:2 'bash -c "input_loop"' C-m  # Run input loop in this window
+
+    # Resize the input window to 4 lines and 12 columns
+    tmux resize-pane -t tui_session:2 -x 12 -y 4
+
+    # Attach to the session (input window will not take over the original terminal)
+    tmux attach-session -d -t tui_session
 }
 
-# Function to print the version number on the first line
-print_version_line() {
-    local version="v.3"
-    printf '%73s%s\n' "" "$version"  # 73 spaces to keep v.3 at the far right
-}
+# Main TUI loop (running in the second tmux window)
+main_tui_loop() {
+    # Initialize TUI display
+    tput civis   # Hide the cursor
+    tput clear   # Clear the screen
 
-# Function to print the title block on line 2 (currently placeholder text)
-print_title_block() {
-    printf '%s\n' "Title Block (Placeholder)"
-}
+    # Draw TUI content
+    draw_tui() {
+        tput clear
+        tput cup 0 0
+        echo "╔════════════════════════════════════════════════════╗"
+        for i in {1..23}; do
+            tput cup $i 0
+            echo "║                                                    ║"
+        done
+        tput cup 24 0
+        echo "╚════════════════════════════════════════════════════╝"
 
-# Function to print the content lines (lines 4–18)
-print_content_block() {
-    print_border  # Line 3 is a border
-    for i in {4..18}; do
-        printf '%s\n' "Content line $i (Placeholder)"
+        # Display placeholder logs
+        tput cup 22 2
+        echo "bos.DBUG:>> Waiting for input..."
+        tput cup 23 2
+        echo "bos.CTRL:>> No input processed"
+    }
+
+    # Continuously refresh TUI
+    while true; do
+        draw_tui
+        sleep 1  # Refresh delay
     done
-    print_border  # Line 19 is a border
+
+    # Cleanup on exit
+    tput cnorm
+    tput clear
 }
 
-# Menu section - allows wrapping
-print_menu() {
-    # Enable wrapping for the menu section (lines 20–23)
-    tput smam  # Enable wrapping
-    for i in {20..23}; do
-        printf '%s\n' "Menu line $i (Placeholder)"
+# Input loop (running in the input window)
+input_loop() {
+    while true; do
+        # Capture input
+        read -p "bos.INPT:<< " user_input
+
+        # If user types "exit", stop the tmux session
+        if [ "$user_input" == "exit" ]; then
+            tmux kill-session -t tui_session
+            exit
+        fi
     done
-    print_border  # Line 24 is a border
 }
 
-# Debug and Control log section (lines 25–26)
-print_bos_lines() {
-    printf 'bos.DBUG:>>%s\n' "$debug_log"  # Debug log line (line 25)
-    printf 'bos.CTRL:>>%s\n' "$ctrl_log"   # Control log line (line 26)
-}
-
-# Input line (line 27) - force horizontal scrolling, no wrapping
-print_input_line() {
-    # Disable wrapping for the input line (line 27)
-    tput rmam  # Disable wrapping for line 27
-    printf 'bos.INPT:<< '   # Input prompt on line 27
-}
-
-# Function to capture user input with horizontal scrolling
-capture_input() {
-    # Move cursor to line 27, column 12 (start after "bos.INPT:<< ")
-    tput cup 26 12
-
-    # Read user input with horizontal scrolling (no wrapping)
-    read -e user_input
-}
-
-# Function to process input and update logs
-process_input() {
-    if [[ "$user_input" == "exit" ]]; then
-        exit_program=true
-    else
-        debug_log="You entered: '$user_input'"
-        ctrl_log="Processed input: $user_input"
-    fi
-}
-
-# Main function to print and capture input
-main() {
-    clear_screen  # Clear the terminal screen
-    print_version_line
-    print_title_block
-    print_content_block
-    print_menu  # Print menu with wrapping
-    print_bos_lines  # Print debug and control logs
-    print_input_line  # Print input line with no wrapping
-    capture_input  # Wait for user input
-    process_input  # Process user input and update bos.DBUG and bos.CTRL lines
-}
-
-# Function to clear the screen
-clear_screen() {
-    clear
-}
-
-# Loop to keep the screen active, break when "exit" is entered
-exit_program=false
-while [[ "$exit_program" == false ]]; do
-    main
-done
-
-# Reset terminal behavior when the program finishes
+# Cleanup function for resetting terminal behavior
 cleanup() {
-    tput smam  # Re-enable terminal wrapping at the end
+    tput cnorm  # Reset terminal to normal state
+    tmux kill-session -t tui_session  # Cleanly kill the tmux session
 }
-cleanup
+
+# Trap cleanup function to handle termination
+trap cleanup EXIT
+
+# Start the tmux session
+start_tmux_session
