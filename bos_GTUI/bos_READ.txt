@@ -1,0 +1,217 @@
+
+>=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=
+>
+>     __                   ______________  ______
+>    / /_  ____  _____    / ____/_  __/ / / /  _/
+>   / __ \/ __ \/ ___/   / / __  / / / / / // /
+>  / /_/ / /_/ (__  )   / /_/ / / / / /_/ // /
+> /_.___/\____/____/____\____/ /_/  \____/___/
+>                 /_____/
+>
+>------------------------------------------------------
+>            author      bosco
+>
+>            purpose     for me to learn about
+>                        file management, script
+>                        writing and git repo
+>                        automation. very much
+>                        intended for Bosco, good
+>                        luck anyone else!
+>            current
+>            features    Loads
+>                        Scripts interlock
+>                        Mutliple windows
+>                        User input
+>                        custom menus
+>                        custom pages
+>
+>            version     0.5
+>=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=
+
+    philosophy of function
+        my goal was to learn how to think about scripts
+        working together, and then for me to take that
+        and automate my konsole functions. most scripts
+        designed with minimalism in mind. its not meant
+        for you, but i'm very glad you're here. if you
+        have feedback please leave a comment, fork and
+        edit, whatever.
+
+
+
+    contents
+    1. installation
+    2. changelog
+    3. file structure
+    4. file breakdown
+    5. variable list
+    6. global function list
+    7. backend functions
+
+    1. installation
+        - download the files, authorize them to run
+        - will add more later
+
+    2. change log
+        9/29/24
+        - started building core_FUNC
+        9/28/24
+        - added readme
+        - wrote file structure
+        - planned inital feature list
+        - trashed v0.1 - 0.4, utter garbage
+
+    3. current planned file structure
+        bos_GTUI
+        ├── /bos_CORE
+        │   ├── base_MENU.sh
+        │   ├── base_PMGR.sh
+        │   ├── base_SYST.sh
+        │   ├── /bos_FEAT #future core features
+        │   ├── /bos_RECD
+        │   │   ├── bos_CNFG.txt
+        │   │   ├── bos_LOGS.txt
+        │   │   └── bos_STAT.txt
+        │   ├── core_FUNC.sh
+        │   └── disp_FUNC.sh
+        ├── /bos_PAGE #usr generated pages here
+        │        └──bos_PTMP.sh
+        ├── /bos_STOR
+        ├── bos_READ.txt
+        └── gobos.sh
+
+    4. file descriptions
+        bos_GTUI
+            - root folder for program
+        /bos_CORE/
+            - main pages
+        base_MENU.sh
+            - base_menu aka main menu
+        base_PMGR.sh
+            - page editor
+        base_SYST.sh
+            - system settings
+        /bos_FEAT/
+            - future feature pages here (program will run without these scripts)
+        /bos_RECD
+            - data storage
+            - bos_CNFG.txt
+               - stores user preferences
+            - bos_LOGS.txt
+               - debug log
+            - bos_STAT.txt
+               - logs user stats for fun
+        core_FUNC.sh
+            - the hub of communications for the program
+        disp_FUNC.sh
+            - takes the hub data and displays to user
+        /bos_PAGE/
+            - user generated pages here
+        bos_PTMP.sh
+            - blank page template for program to copy and use for generation
+        /bos_STOR/
+            - deleted pages are moved here
+        bos_READ.txt
+            - good job
+        gobos.sh
+            - launches program
+
+    5. varliable list
+        meta data
+        - page_iden=
+            '{type of file}_{PAGE CODE}'
+               ex. System Settings= 'core_SYST'
+            core= file type read only page, program required
+            base= parent page
+               cannot be deleted if it has heirs
+               ex. base_PMGR
+            heir= child page
+               ex. heir_{first character of page code}{three letter code for page}
+               ex. 'heir_PEDT' for child page edit
+            * some pages are marked core and cannot be edited, this code was more to keep my head
+              straight while editing and isn't super helpful to you, likewise to prevent orphans
+              all heirs must be deleted before a parent
+        - func_list
+
+    6. global funtion list (these work anywhere, regardless of page)
+       '.exit'
+            - closes the program
+       '.back'
+            - goes to the parent page
+       '.rfsh'
+            - force display to refresh
+       '.base'
+            - takes user to the main menu base_MENU page
+
+
+
+    7. back end function list (not in order)
+       'page_iden_init'
+            - runs user input, if a page code is entered sets flag on page to activate
+       'page_iden_unin'
+            - stops the currently active page and resets 'page_iden_init' to handle input
+       '{page_iden}_bos_DBUG_{xxx}'
+            - prints debugs to logs
+            - the 'xxx' is a sequential number
+       '{page_iden}_bos_EROR_{xxx}'
+            - prints errors to user
+            - the 'xxx' is a sequential number
+       '{page_iden}_func_list'
+            - loads all functions from a page
+       'bos_inpt'
+            - receieves the user input and sends it to both the page and to the base files
+
+       functions from files (things i wrote as i went, i planned the above)
+             - from gobos.sh
+             local core_files
+             load_user_pages
+             init_logging
+             load_core_functions
+             load_core_files
+             load_user_pages
+             init_logging
+             - disp_FUNC
+             PROJECT_ROOT="your/path/here"  # Replace this with the full path to your project, need to find better solutoin to this problem
+                PIPE="$PROJECT_ROOT/bos_CORE/bos_pipe"
+             disp_print
+                - reads the array sent from the pipe to print
+             rfsh_disp
+                - refreshers display after print
+
+
+
+
+
+
+
+
+
+
+
+
+    See Also:
+
+    License:
+    MIT License
+
+Copyright (c) [2024] [Bosco Software]
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
