@@ -1,3 +1,25 @@
+line 1 empty, always
+line 2 title line (title on left side, version v0.4 on the right side of the line)
+line 3 empty, always
+lines 4-15
+line 16 empty, always
+line 17-19 menus
+line 20 empty, always
+lines 21,22,23 are bos.INPT:<<, only print the bos.INPT on the first line and allow the users input to wrap to
+line 24 empty, always
+
+
+base
+├──(other things we haven't made)
+├──syst
+    ├──page editor
+
+
+
+
+
+
+
 formatting:
 line 1 [70 spaces, then] version number (right now v0.3)
 line 2 title line
@@ -498,5 +520,881 @@ localuser:deck being added to access control list
 --------------- bottom of screen
 
 
+
+Good afternoon:D
+i got somer perspective on yesterday and i'm ready to start fresh, laser focused, and today i will not let our scope creep for an inch!
+our current file tre below:
+├── bosAXIS.sh
+├── bosCORE.txt
+├── bos_display_data.txt (i deleted this, please only use bosCORE for this type of thing)
+├── bosDISP.sh
+├── launch.sh
+└── scrap
+
+right now our konsole window shows 3 panels, bottom left pane: Input (this needs to be display), bottom right pane: Auxiliary (this should be input) and finally top left pane: Logging (this should be logging and program out, in other words this box shows all logs, what the program is saying to the user, and what the user last inputted.)
+
+i want to only do the following with this prompt:
+- change the names of the panes to match our desired goals.
+- update file structure (do we even need to write data to a text file in this new set up?
+
+i want to make sure we're cleaning up any erounous code. right now i'm only focus on us mastering tmux and making these panels appear consistently, and receving data and sending it correctly
+
+
+
+
+column 1 and 89 should always print a blank empty space for padding
+
+
+this is a theory question, please dont try to produce a snippet, just help me learn: so right now we're adding to our existing code. when or how do i think about moving to creating new content that fits into existing code.
+
+
+
+notes:
+- i'm concerned at your directoin of keep tracking of the users input. it would be easier to run a check on what the current menu is nest under and go up one level, i dont want to track the user jumping around, i just want to navigate upward
+
+
+
+(deck@steamdeck base)$ tree
+.
+├── bosAPP
+│   ├── bosFILE
+│   │   └── bosPAGE
+│   │       └── pages.txt
+│   ├── menu.sh
+│   └── page_manager.sh
+├── launch.sh
+└── scrap
+
+4 directories, 6 files
+
+above is the current file structure, please adjust the scripts as necessary, note that launch.sh is in the same directory as bosAPP that is now our main folder for anything for the app. i nested bosFILE and bosPAGE as requested.
+
+i want to make sure launch does the follwoing:
+launches the program, and then is the thing that handles the printing of data. so all other functions can just send either 'title' data, 'display' data, 'menu' data and 'ctrl' to be printed, and then receives inputs and sends them back to the functions. since this script is sort of handling all of the printing, what we make out side of here can be all functionality, correct?
+
+as for the menu.sh, i'd like to use this file to eventually grow to house an advanced visual menu screen and a screen saver. right now it just allows the user to navigate to other pges
+
+the page_manager does what we intended. do i have a good handle on this plan and modularzation?
+
+
+
+
+we completely lost the formating we had nailed down before:
+line 1 empty, always
+line 2 title line (title on left side, version v0.4 on the right side of the line)
+line 3 empty, always
+lines 4-15
+line 16 empty, always
+line 17-19 menus
+line 20 empty, always
+lines 21,22,23 are bos.INPT:<<, only print the bos.INPT on the first line and allow the users input to wrap to lines 86 and 87
+line 24 empty, always
+
+we lost the 1st column spacing. i'm pasting the old script, but please keep this new modular function while restoring how the text was laid out.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#!/bin/bash
+
+# Hardcode terminal dimensions: 89 columns, 24 rows
+cols=89
+rows=24
+
+# Define line positions
+display_start=4
+display_end=15
+menu_start=17
+menu_end=19
+input_start=21
+
+# Title and version
+title="My Program"
+version="v0.4"
+
+# Initialize placeholder content for display and menu
+display_content=("Placeholder: Display Line 1" "Placeholder: Display Line 2" "Placeholder: Display Line 3")
+last_command="No commands yet."
+command_result="No results yet."
+
+# Table of pages (each page has a name and associated content)
+declare -A pages=(
+    ["bosCODE"]="bosCODE: Welcome to the bosCODE page!\nbosCODE: Personal coding section."
+    ["home"]="Home: Welcome to the main menu!\nHome: Use the menu below to navigate."
+)
+
+# Menu table (the keys of this array correspond to pages)
+menu=("bosCODE" "settings" "help" "home")
+
+# Function to print padding lines (empty line with padding)
+print_padding_line() {
+    printf "%-${cols}s\n" " "
+}
+
+# Function to print content with padding
+print_padded_line() {
+    local content="$1"
+    printf " %-$(($cols - 2))s \n" "$content"
+}
+
+# Function to print the menu across lines, ensuring 3 lines are always printed
+print_menu() {
+    local row=0
+    local col=1
+    local menu_line=""
+
+    # Print menu items, wrapping as needed
+    for menu_item in "${menu[@]}"; do
+        # Check if the current line can fit the next menu item
+        if [[ ${#menu_line} -gt 0 && $((${#menu_line} + ${#menu_item} + 2)) -gt $(($cols - 2)) ]]; then
+            # Print the current line and move to the next row
+            print_padded_line "$menu_line"
+            row=$((row + 1))
+            menu_line="$menu_item"
+        else
+            if [[ -z "$menu_line" ]]; then
+                menu_line="$menu_item"
+            else
+                menu_line="$menu_line, $menu_item"
+            fi
+        fi
+    done
+
+    # Print any remaining menu items on the last row
+    if [[ -n "$menu_line" ]]; then
+        print_padded_line "$menu_line"
+        row=$((row + 1))
+    fi
+
+    # Fill remaining rows with empty lines if less than 3 rows are printed
+    while [[ $row -lt 3 ]]; do
+        print_padded_line " "
+        row=$((row + 1))
+    done
+}
+
+# Function to reprint the entire screen
+reprint_screen() {
+    tput clear  # Clear the screen
+
+    # Line 1: Empty
+    print_padding_line
+
+    # Line 2: Title (title on the left, version on the right)
+    printf " %-$(($cols - 15))s %9s \n" "$title" "$version"
+
+    # Line 3: Empty
+    print_padding_line
+
+    # Lines 4-15: Display content (dynamically changeable)
+    for ((i = $display_start; i <= $display_end; i++)); do
+        if [ $(($i - $display_start)) -lt ${#display_content[@]} ]; then
+            print_padded_line "${display_content[$(($i - $display_start))]}"
+        else
+            print_padded_line "Placeholder: Empty Display Line"
+        fi
+    done
+
+    # Line 16: Empty
+    print_padding_line
+
+    # Lines 17-19: Display the menu across rows (always prints 3 lines)
+    print_menu
+
+    # Line 20: Empty
+    print_padding_line
+
+    # Line 21: Show last command result
+    print_padded_line "bos.CTRL:>> $command_result"
+
+    # Line 22: Input prompt
+    printf " bos.INPT:<< "
+}
+
+# Function to load a page based on the menu
+load_page() {
+    local page_name="$1"
+    if [[ -n "${pages[$page_name]}" ]]; then
+        # Split the content into an array and load it into display_content
+        IFS=$'\n' read -r -d '' -a display_content <<< "${pages[$page_name]}"
+        command_result="Loaded page: $page_name"
+    else
+        command_result="Error: Unknown page '$page_name'"
+    fi
+}
+
+# Main loop to handle user input and page navigation
+while true; do
+    # Reprint the entire screen
+    reprint_screen
+
+    # Read user input
+    read input
+
+    # Process the input
+    if [[ "$input" == "exit" ]]; then
+        command_result="Exiting program..."
+        reprint_screen
+        break
+    elif [[ " ${menu[*]} " == *" $input "* ]]; then
+        # If input matches a valid page name in the menu, load that page
+        load_page "$input"
+    else
+        command_result="Error: Unknown command '$input'"
+    fi
+done
+
+# Restore terminal settings and clear screen
+tput cnorm
+tput clear
+
+
+
+
+
+
+so if i understand correctly, since this worked, i no longer need to edit launch? it should always display data correctly as its now more of a clear function?
+
+
+
+
+
+
+
+
+--{page code}--
+Page Title
+Short Description (not shown, is meta data)
+Display data (if avaliable)
+Menu list (list of menus avaliable in this page)
+This line should call to the .sh file associated with the page (for page, its page_manager.sh, as such it does not display)
+--{end of 'page code'}--
+
+├── bosAPP
+│   ├── bosFILE
+│   │   └── bosPAGE
+│   │       └── pages.txt
+│   ├── menu.sh
+│   └── page_manager.sh
+├── launch.sh
+└── scrap
+
+
+
+
+
+
+
+
+
+--{syst}--
+System Settings
+page, (we dont have any others yet, just trying to show examples)
+--{end of syst}--
+
+
+
+
+
+
+
+
+
+
+ok we're so close but i think i'm getting confused in some of our logic soo i want to go through and refine what we've made so it makes more sense. i also updated file names to make them more accurate and in line with formatting.
+first the fire tree:
+root
+├── bosAPP
+│   ├── bosBASE.sh (the printer)
+│   ├── bosPAGE (folder, driectory for all created pages (pages should be created as .sh files so they can contain functions))
+│   │   └── bosLOGS.txt (this just keeps a log of existing pages and should be used for debug logs)
+│   ├── bosPMGR.sh (page creation script)
+│   └── bosSYST.sh (system settings page)
+├── launch.sh (combines all scripts into functional program)
+└── scrap (i take notes here, ignore)
+
+ok i have a better understanding now of what we should do to make this function better and i'm going to outline each file below, please note the new names and directory structure above. i want you to respond with one snippet at a time, in the order they appear from the directory above, so we can createa and edit our files carefully.
+
+launch.sh
+- this script should open the application
+- it loads all the necssary scripts below in the following order
+-- bosBASE.sh
+-- bosSYST.sh
+-- bosPMGR.sh
+-- points to relevant directories
+
+bosBASE.sh
+- this should be the printer that functions by doing the following
+-- respects the previously outlined formatting
+--- title on 2nd line, with version number
+--- lines 4-15 display
+--- lines 17-19 menus
+--- lines 21-23 bos.INPT
+--- all other lines not listed are empty for spacing/padding
+- this script waits for user input, then prints whatever functions were activated by our inputs. our program works in such a way that the user can only enter a single prompt or action, so any function sending data to bosBASE should just print, or i guess bosBASE should print whatever it receives. so if we transition pages it prints all the page data from the txt. if we input something and the page does need to change, it refreshs the print showing only the chnages need (for example pretend we have a 'edit page name' fucntion, after the user does change the page name it refreshse and pulls the proper page data and what not)
+
+
+bosSYST.sh
+- a hardcoded page to edit the program. it should still be formatted to display like other pages, so our functions in the bosBASE do not need to change. so we need to remember our default template notated below.
+-- right now it only has one page, which is:
+--- page
+
+
+bosPMGR.sh
+- will create and edit pages
+
+
+#--{'page code'}--
+#meta data for our program below this line
+#below this line put the program directory (this just tells the program how files are nested, we are not doing any file management on my computer, they can all stored inside the bosPAGE folder)
+
+#below this line is the parent of this page
+
+#put page code below this line
+
+#begins display data
+#put title below this line
+
+#put display lines below this line
+
+#put menu list for page below this line (shows what is considered 'nested' below this, check directory in this same file)
+##--{end of 'page code'}--
+
+
+sample of system settings .txt for meta data
+#--{'syst'}--
+#meta data for our program below this line
+#below this line is the parent of this page
+menu>syst
+#below this line show chidren (we only have one now, separated by ,)
+syst>page,
+
+#put page code below this line
+syst
+#begins display data
+#put title below this line
+System Settings
+#put display lines below this line
+{nothing right now}
+#put menu list for page below this line (shows what is considered 'nested' below this, check directory in this same file)
+page, (nothing else right now)
+##--{end of syst}--
+
+i hope this is more stremlined. i know thats a lot, so please, one file at a time. i've created all the files,i think, but please add debug logs that will print in the bosLOGS so we can track our progress.
+
+
+   .vcm
+
+
+
+ we're super close. this edit changed some things in a small way, please try and keep the functionality but adjust it to follow this sample of the print:
+---{top of screen}---
+1 padding, handled by pad function
+2 loads title of page (only on main menu, loads version)
+3 padding, handled by pad function
+4 DISP
+5 DISP
+6 DISP
+7 DISP
+8 DISP
+9 DISP
+10 DISP
+11 DISP
+12 DISP
+13 DISP
+14 DISP
+15 DISP
+16 DISP last line
+17 padding, handled by pad function
+18 menu
+19 menu
+20 global commands
+21 padding, handled by pad function
+22 bos.CTRL:>>
+23 BOS.inpt:<<
+24 padding, handled by pad function
+---{bottom of screen}---
+
+---{top of screen}---
+
+ Main Menu                                                                       v0.4
+
+ Welcome to the app!
+ Choose an option from the menu:
+ DISP
+ DISP
+ DISP
+ DISP
+ DISP
+ DISP
+ DISP
+ DISP
+ DISP
+ DISP
+ DISP
+
+ page, syst
+ .exit, .back, .menu
+
+ bos.CTRL:>> Invalid input. Try again.
+ bos.INPT:<<
+bos.INPT:<<
+---{bottom of screen}---
+
+note: bos.INPT:<< is showing up twice, and the users text is position at the bottom one. PLEASE make a mental note that this is being printed twice nearly every snippet. from the print it appears that line 19 did not print, as the function finished printing after line 18, we have to make sure menu always prints two lines, the second black if the first doesn't wrap down. otherwise the function is good
+
+
+
+ok i want to build the following, and it is super imporant that we try to NOT edit bosBASE. if we have to edit this file it means we failed in being modular (which is ok, we can fix it) but i want to defintley try and separate that file from what we're about to make.
+
+i have created bosPMGR.sh to hanle 1) the page data to display for this page, since it alayws present in the program. 2) it should not do any editing of the print job. ideally it sends what needs to be displayed to the user to the functions in bosBASE, this is an entirely separate file (that is apphended to bosBASE after launch)
+do you have any questions?
+├── bosAPP
+│   ├── bosBASE.sh
+│   ├── bosPAGE
+│   │   └── bosLOGS.txt
+│   ├── bosPMGR.sh
+│   └── bosSYST.sh
+├── launch.sh
+└── scrap
+
+
+
+
+
+
+
+you've changed a file name without alerting me and has gotten us confused. i never wanted to get rid of bosBASE.sh but i think you changed the file name to bosBASE.sh to be bosBASE_main_menu.sh and how we're confused and need to take a step back and start fresh with what we learned. Please reference the past snippets i complimented you on, note the functions that prefromed well, and try and apply that to the logic below.
+├── bosAPP
+│   ├── bosBASE_main_menu.sh
+│   ├── bosBASE.sh
+│   ├── bosMENU.sh
+│   ├── bosPAGE
+│   │   └── bosLOGS.txt
+│   ├── bosPMGR.sh
+│   └── bosSYST.sh
+├── launch.sh
+└── scrap
+
+3 directories, 8 files
+you created two bases, we need to reduce our file structure and compleixty as outlined below. i'm going to include some snippets from the relevant functions in the spots they need to go for the rewrite.
+
+below is a complete logic and rewrite guide. please ask questoins if you have them before you write code. i want the snippets to be complete snippets, one at a time and confirm when i'm ready for the next.
+
+root [new structure]
+├── bosAPP
+│   ├── bosBASE.sh
+│   ├── bosMENU.sh
+│   ├── bosPAGE
+│   │   └── bosLOGS.txt
+│   ├── bosPMGR.sh
+│   ├── bosSYST.sh
+│   └── bosTEMP.sh
+├── launch.sh
+└── scrap
+
+
+launch.sh
+this file ONLY does:
+- loads bosBASE
+- loads the rest of the files in such a way they are avaliable to bosBASE but do not function until called
+- all debugs should be created here, and it prints them in bosLOGS.text
+
+bosAPP/
+-bosBASE.sh
+--this file does ONLY
+--- it prints the formatted style of:
+---- title (dropping all appearnece of version number for now)
+---- display
+---- menu
+---- global menu
+---- bos.CTRL
+--- it receives this data and send it to relevant function
+---- bos.INPT
+-- this file handles all the formatting, no other file should worry about that. this file prints like we've insctruced in the past with the correct padding. at the end of this message is a sampe for reference.
+
+-bosMENU.sh
+-- this file ONLY handles:
+--- what menu to send to the printer
+---- if main menu, then pull from a main menu table
+---- if syst, pull from system settings menu table (which includes the child page)
+----- if page, then pull from page men table
+--- always prints global menu
+--- houses the functions for all global functions (so the .exit function, the .back function for right now)
+--- if this .sh is done right, menus from any page should be fitlered trhough here before heading to the printer
+
+-bosPMGR.sh
+-- its empty right now but eventally will house page creation functions
+
+-bosSYST
+-- is a page, but hard coded so the app can function. it does not do any printing or formating, but will house future functions to edit colors, and other settings.
+-- the menu right now only contains 'page' which is the page code for the page manager (bosPMGR.sh)
+
+-bosPMGR.sh
+-- menu code is 'page'
+-- opens from system settings menu
+-- will eventually house the creating of new pages, editing, and deleting of pages (not the hardcoded ones)
+-- all pages created from this .sh will be stored in bosAPP/bosPAGE as.sh files, as they will follow the same template as the hardcoded pages.
+
+-bosTEMP.sh
+-- i would like to build a default/blank page as we go so when we get to the page creation function we can have it duplicate this and fill in the details. we are not making this now i'm just alerting you to its presence.
+
+notes:the .exit function should close the entire program, not the page
+
+------{top of da screen}------
+line 1 empty, always
+line 2 title line
+line 3 empty, always
+lines 4-15
+line 16 empty, always
+line 17-19 menus
+line 20 empty, always
+line 21 bos.CTRL:>>
+line 22 bos.INPT:<< {user inputs text on this line}
+line 23 empty always
+line 24 empty, always
+------{bottom of screen}------
+------{sample code}------
+#!/bin/bash
+
+# Log the start of the printer script
+echo "$(date): bosBASE.sh started." >> bosAPP/bosPAGE/bosLOGS.txt
+
+# Global commands that will always print on line 20
+global_commands=(".exit" ".back" ".menu")
+
+# Function to print a line with padding
+print_padded_line() {
+    local content="$1"
+    local total_columns=89
+    printf " %-$(($total_columns - 2))s \n" "$content"
+}
+
+# Function to print an empty padded line (for spacing/padding)
+print_empty_line() {
+    local total_columns=89
+    printf "%-${total_columns}s\n" " "
+}
+
+# Function to refresh the display
+bosBASE_refresh() {
+    clear
+    local title="$1"
+    local version="v0.4"
+    local display_content=("${!2}")  # Pass display lines as an array
+    local menu_list=("${!3}")        # Pass menu items as an array
+    local command="$4"
+
+    # Line 1: Padding
+    print_empty_line
+
+    # Line 2: Title and Version
+    printf " %-$(($(tput cols) - 15))s %9s \n" "$title" "$version"
+
+    # Line 3: Padding
+    print_empty_line
+
+    # Lines 4-16: Display content (DISP)
+    for ((i=0; i<13; i++)); do
+        if [[ $i -lt ${#display_content[@]} ]]; then
+            print_padded_line "${display_content[$i]}"
+        else
+            print_padded_line "DISP"
+        fi
+    done
+
+    # Line 17: Padding
+    print_empty_line
+
+    # Line 18: Menu items (Page-specific)
+    local current_line=18
+    local menu_line=""
+
+    for menu_item in "${menu_list[@]}"; do
+        if [[ -z "$menu_line" ]]; then
+            menu_line="$menu_item"
+        else
+            menu_line="$menu_line, $menu_item"
+        fi
+
+        # Print menu items on lines 18 and 19
+        if [[ ${#menu_line} -ge 89 || $current_line -ge 19 ]]; then
+            print_padded_line "$menu_line"
+            menu_line=""
+            current_line=$((current_line + 1))
+        fi
+    done
+
+    # Print remaining menu items if there's space left
+    if [[ -n "$menu_line" && $current_line -le 19 ]]; then
+        print_padded_line "$menu_line"
+    fi
+
+    # Ensure line 19 has padding if no content fills it
+    if [[ $current_line -eq 18 ]]; then
+        print_empty_line
+    fi
+
+    # Line 20: Global commands
+    local global_line=""
+    for global_command in "${global_commands[@]}"; do
+        if [[ -z "$global_line" ]]; then
+            global_line="$global_command"
+        else
+            global_line="$global_line, $global_command"
+        fi
+    done
+
+    print_padded_line "$global_line"
+
+    # Line 21: Padding
+    print_empty_line
+
+    # Line 22: Show last command result (bos.CTRL)
+    print_padded_line "bos.CTRL:>> $command"
+
+    # Line 23: Input prompt (bos.INPT)
+    printf " bos.INPT:<< "
+
+    # Missing closing bracket added here for bosBASE_refresh
+}
+
+# Function to handle dynamic menu loading based on user input
+bosBASE_menu_handler() {
+    local user_input="$1"  # User's input to determine which menu to load
+    local title=""
+    local display_lines=()
+    local menu_items=()
+
+    # Check if the user input corresponds to a specific page in the directory
+    if [[ -f "bosAPP/bosPAGE/$user_input.sh" ]]; then
+        # If the page file exists, source it and load its content
+        source "bosAPP/bosPAGE/$user_input.sh"
+        title="${page_title}"  # Assume each page file defines its title
+        display_lines=("${page_display[@]}")  # Array for page content
+        menu_items=("${page_menu[@]}")  # Array for page-specific menu items
+    else
+        # Default to hardcoded menu handling
+        case "$user_input" in
+            "syst")
+                title="System Settings"
+                display_lines=("This is the system settings page." "Here you can manage system configurations.")
+                menu_items=("page" ".back")
+                ;;
+            "page")
+                title="Page Manager"
+                display_lines=("Welcome to the Page Manager!" "Manage your pages here:")
+                menu_items=("Create Page" "Edit Page" "Delete Page" ".back")
+                ;;
+            "base" | "")
+                title="Main Menu"
+                display_lines=("Welcome to the app!" "Choose an option from the menu:")
+                menu_items=("syst" "page")
+                ;;
+            *)
+                title="Error"
+                display_lines=("Invalid input or page not found.")
+                menu_items=(".back")
+                ;;
+        esac
+    fi
+
+    # Load the global menu on the third line
+    local global_items=(".exit" ".back" ".menu")
+
+    # Send all the data to the print function for display
+    bosBASE_refresh "$title" display_lines[@] menu_items[@] global_items[@]
+}
+
+# Function to capture and process user input
+bosBASE_main_menu() {
+    local title="Main Menu"
+    local display_lines=("Welcome to the app!" "Choose an option from the menu:")
+    local menu_items=("page" "syst")  # Page-specific options
+    local user_input=""
+
+    while true; do
+        # Refresh the screen with the title, display, and menu
+        bosBASE_refresh "$title" display_lines[@] menu_items[@] "$user_input"
+
+        # Capture user input
+        read -p " " user_input  # No extra input prompt after this
+
+        # Handle user input and send to respective functions
+        case "$user_input" in
+            "syst")
+                bosSYST  # Call system settings page function
+                ;;
+            "page")
+                bosPMGR  # Call page manager function
+                ;;
+            ".exit" | ".back" | ".menu")
+                echo "$(date): Exiting program." >> bosAPP/bosPAGE/bosLOGS.txt
+                clear
+                exit 0
+                ;;
+            *)
+                echo "$(date): Invalid input '$user_input'" >> bosAPP/bosPAGE/bosLOGS.txt
+                user_input="Invalid input. Try again."
+                ;;
+        esac
+    done
+}
+
+# Log the successful setup of bosBASE.sh
+echo "$(date): bosBASE.sh setup complete." >> bosAPP/bosPAGE/bosLOGS.txt
+
+
+#!/bin/bash
+
+# Menu items for the Main Menu (base)
+main_menu_items=("syst")
+
+# Menu items for System Settings (syst)
+syst_menu_items=("page" ".back")
+
+# Menu items for the Page Manager (page)
+page_menu_items=("Create Page" "Edit Page" "Delete Page" ".back")
+
+# Global commands that will always be shown
+global_commands=(".exit" ".back")
+
+# Function to handle dynamic menu display and global commands
+bosMENU() {
+    local page="$1"  # The current page (base, syst, page)
+    local title=""
+    local display_lines=()
+    local menu_items=()
+
+    # Determine which menu to load based on the page
+    case "$page" in
+        "base")
+            title="Main Menu"
+            display_lines=("Welcome to the app!" "Choose an option from the menu:")
+            menu_items=("${main_menu_items[@]}")
+            ;;
+        "syst")
+            title="System Settings"
+            display_lines=("This is the system settings page." "Here you can manage system configurations.")
+            menu_items=("${syst_menu_items[@]}")
+            ;;
+        "page")
+            title="Page Manager"
+            display_lines=("Welcome to the Page Manager!" "Manage your pages here:")
+            menu_items=("${page_menu_items[@]}")
+            ;;
+        *)
+            title="Error"
+            display_lines=("Unknown page.")
+            menu_items=(".back")
+            ;;
+    esac
+
+    # Combine the global commands into the menu
+    menu_items+=("${global_commands[@]}")
+
+    # Call the refresh function to print the page title, content, menu, and globals
+    bosBASE_refresh "$title" display_lines[@] menu_items[@] ""
+}
+
+------{end sample code}------
+i hope this logic and these notes are succfiencet to resolve our issue, please ask questions or suggest alternative ideas if you have them. only one snippet at a time, please, until i'm ready for the next.
+
+
+
+function 1
+- checks if the user inputed a specific page, the loads the page and displays that pages menu
+
+function 2
+- if function 1 fails, either start up or the user executed a command
+
+function 3
+- if user just started app display main menu text*
+
+
+
+
+ok, i tested and i want to go one bug at a time, we're going to try and only edit a single .sh at a time (is function the right word btw? please help me learn proper bash words. bash me over the head with them lolololololol.)
+
+i want to focus on bosMENU.sh
+right now it seems to have default menu items in ways i don't get. what i want it to do is this:
+ we need to rework the files tructure so that we have a tree to reference. create a new .txt file titled bosTREE inside the bosAPP/ folder that creates a file tree and tracks the heirearchy of parents and children. i want bosMENU to have the function to create this file if it doesn't exist, and then scan the files to track heirachy. i am open to how to do this, but my idea is that each page will have a comment on near the top, consistently, that our program can read that shows something like this:
+
+main menu
+├── syst
+│   └── page
+└── any other parent directory (currently are none)
+
+another solution could be:
+0. main menu
+    1. system
+        2. page
+    1. (future parent directories)
+
+
+indicating that the main menue is the parent of system settings is the parent of page
+
+bosMENU.sh contains:
+
+tables
+1) main menu table
+- this table needs to display syst always
+- this table also needs to populate with all program root level files. our programs root is defined as bosAPP/)
+- this should allow our main menu to show the page options for all parent level directories
+3) global table of global commands
+
+
+- function 1
+checks if this is start up, if so display main menu
+- function 2
+receives user input, pulls new menu from new page to replace default menu. this should then stop the main menu function from being used until the user has gone back to the main menu. to do this we are going to institue a check in this file that allows a global flag for the current active page
+- funtion 3
+if the user is on a page (for example syst) lines 17 and 18 should now be display ONLY that pages menu (in addtion to the default global menu thats always seen on 19)
+
+on start up we have to create a system in this file that scans the bosAPP folder and builds a new file tree off of the new files, and it needs to read that commented line in them to determine the loading order.
+
+
+
+
+
+
+okie doke, that was an unsuccesful test. heres how we're going to adjust:
+- i reviewed your script and it does the following (in order)
+-- global commands, this is good
+-- creating bosTREE.txt is not working at all. i created the .txt file so you can ignore that part of the program, and just focus on editing it. I attempted to copy your pattern as outlined in a previous reponse, as alsop pasted here:
+base
+ └──syst
+     └──page
+note that i really want to use the page codes here for brevitiy, note that main menu is supposed to be 'base' as a page navigation aide. i should ALWAYS be able to type 'base' into the input and navigate to the main menu as a global command, this is one of the few global commands not preceeded by a '.'
+-- your next function is display menus dynimcally based on current pages
+--- i want to veryify that this is going to pull all the menu data from the hardcoded pages themselves. this function SHOULDNT be populating the menu, it hsould just stand as the printer. if the global flag is telling the printer we're on system settings, we should pull the system settings menu information from that specific page (.sh file for it) as opposed to what we have now, hard coding it in.
+
+help me understand if these comments are good or helpful, if so can we go this way?
+
+i wrote them as after the test i noticed that 'page' shows up on every single page, due to its hard coded into the menu. i hae used that word too much, hardcoded. there are some pages that the user can NEVER delete, the system settings and page manager are among them, but we still want to treat them like they are being loaded as separte files. does that make sense?
 
 
