@@ -10,13 +10,18 @@ PIPE="$PROJECT_ROOT/bos_CORE/bos_pipe"
 if [[ ! -p "$PIPE" ]]; then
     echo "Creating pipe at $PIPE"
     mkfifo "$PIPE"
+    echo "Pipe created at $PIPE" >> "$PROJECT_ROOT/bos_CORE/bos_LOGS.txt"
 else
     echo "Pipe found at $PIPE"
+    echo "Pipe found at $PIPE" >> "$PROJECT_ROOT/bos_CORE/bos_LOGS.txt"
 fi
 
 # Launch the display terminal (trml_DISP) to handle the output
 echo "Launching trml_DISP (Display Terminal) with bosCTRL profile..."
+echo "Launching trml_DISP with bosCTRL profile" >> "$PROJECT_ROOT/bos_CORE/bos_LOGS.txt"
+
 konsole --profile bosCTRL --noclose -e "tail -f $PIPE" &
+
 
 # disp_print function: Receives data packet from core_FUNC and prints it
 function disp_print() {

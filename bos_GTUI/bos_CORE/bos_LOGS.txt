@@ -1,0 +1,6 @@
+Pipe found at /home/deck/BOSctrl/base/bos_GTUI/bos_CORE/bos_pipe
+Launching trml_DISP with bosCTRL profile
+Pipe found at /home/deck/BOSctrl/base/bos_GTUI/bos_CORE/bos_pipe
+Launching trml_DISP with bosCTRL profile
+Pipe found at /home/deck/BOSctrl/base/bos_GTUI/bos_CORE/bos_pipe
+Launching trml_DISP with bosCTRL profile

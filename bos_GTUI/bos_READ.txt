@@ -9,6 +9,7 @@
 >                 /_____/
 >
 >------------------------------------------------------
+>
 >            author      bosco
 >
 >            purpose     for me to learn about
@@ -26,6 +27,7 @@
 >                        custom pages
 >
 >            version     0.5
+>
 >=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=x=
 
     philosophy of function
@@ -47,6 +49,11 @@
     5. variable list
     6. global function list
     7. backend functions
+    8. current problems
+    Appendix
+    Licnese (lol but hey,
+            it was fun to
+            pate:D)
 
     1. installation
         - download the files, authorize them to run
@@ -55,6 +62,8 @@
     2. change log
         9/29/24
         - started building core_FUNC
+        - wrote gobos.sh
+        - wrote disp_FUNC.sh
         9/28/24
         - added readme
         - wrote file structure
@@ -143,8 +152,6 @@
        '.base'
             - takes user to the main menu base_MENU page
 
-
-
     7. back end function list (not in order)
        'page_iden_init'
             - runs user input, if a page code is entered sets flag on page to activate
@@ -178,21 +185,16 @@
              rfsh_disp
                 - refreshers display after print
 
+    8. current problems
+        - both screens launch but:
+        -- input isn't registered, prompt not shown
+        -- DISP doesn't function
+        -
 
+Appendix:
 
-
-
-
-
-
-
-
-
-
-    See Also:
-
-    License:
-    MIT License
+License:
+MIT License
 
 Copyright (c) [2024] [Bosco Software]
 
